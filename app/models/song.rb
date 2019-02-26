@@ -29,16 +29,14 @@ class Song < ActiveRecord::Base
   end
 
   def note_contents
-    songs_with_notes = []
   	if self.notes
-       songs_with_notes = self.notes.select do |note|
-          note.content != "" && note.content != nil
-       end
+       self.notes.map do |note|
+          if note.content != "" && note.content != nil
+            note.content
+          end
+       end.compact #removes nil from the array
     else
       nil
-    end
-    songs_with_notes.map do |note|
-      note.content
     end
   end
 
